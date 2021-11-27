@@ -149,7 +149,6 @@ class Backgammon:
     def result(self, state, move=None):
         board = copy.deepcopy(state.board)
         bar = copy.deepcopy(state.bar)
-        # dice_roll = copy.deepcopy(state.dice_rolls)
         player = state.player
         if move is None:
             return GameState(board, bar, self.opponent(player))
@@ -207,7 +206,6 @@ def forward_pruning(state, actions, game, k=4):
     for a in actions:
         new_state = game.result(state,a)
         score_list.append(eval_fn(state))
-    #arr = np.array(score_list)
     indices = sorted(range(len(score_list)), key=lambda i:score_list[i])[-k:][::-1]
     for i in indices:
         new_action_list.append(actions[i])
@@ -299,7 +297,6 @@ if __name__ == '__main__':
     game_state = GameState(board, bar, player)
     game = Backgammon()
 
-    #print(game.actions(game_state, dice_rolls))
     moves = get_best_move(game_state, game, dice_rolls)
     if moves is not None:
         print("\n".join(" ".join(str(m) for m in move) for move in moves))
